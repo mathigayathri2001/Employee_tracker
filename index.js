@@ -330,7 +330,6 @@ async function updateEmployeeRole() {
   const [updEmp] = await connection.query(`UPDATE EMPLOYEE SET ? WHERE ?`,
     [{ role_id: roleID },
     { id: empID }])
-
   await start()
 }
 

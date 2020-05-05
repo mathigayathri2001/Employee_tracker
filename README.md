@@ -26,15 +26,17 @@
   
   # Installation
 
-  Step 1: Run the companyschema.sql to create database and tables.
-  Step 2. Run the seed.sql, this will insert records into the table Department, Role and Employee.
-  Step 3: Install the NPM packages in the command line
+  * Step 1: Run the companyschema.sql to create database and tables.
+  * Step 2. Run the seed.sql, this will insert records into the table Department, Role and Employee.
+  * Step 3: Install the NPM packages in the command line
   
   Note: Application is designed in such away that Manager record will be identified in Employee table as Manager_ID is NULL
 
    To install Clone the repo and to view the application  Run seed.sql file to pre-populate your database
-  Install NPM packages through command-line
-  ### *npm*
+  Install NPM packages through command-line.
+
+  ## Flow Diagram
+  ![Database Schema](Assets/schema.png)
 
   # User Story
   ```
@@ -56,12 +58,7 @@
   # Usage
  ![Employee Tracker](Assets/Employee_tracker.gif)
 
-  
-
- 
-
-  # Question
-  ### If there is any question, please contact us in the follwing URL.
+ # Question
 
   https://github.com/mathigayathri2001
 
