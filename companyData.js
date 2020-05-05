@@ -1,4 +1,6 @@
+/* Module function to handle company data transactions */
 
+// function to get manager names 
 async function getManagerName() {
   const [mgr] = await connection.query(`SELECT concat(First_Name,' ',Last_Name) as Manager
   FROM   Employee WHERE  Manager_ID is null `)
@@ -10,6 +12,7 @@ async function getManagerName() {
   return mgrNames
 }
 
+// function to get manager name and role
 async function getManagerNameRole() {
   const [mgr] = await connection.query(`SELECT concat(E.First_Name,' ',E.Last_Name, ' ', D.Name) as Manager
    FROM   Employee E, Role R, Department D WHERE  Manager_ID is NULL AND E.Role_ID = R.ID and R.Department_ID = D.ID`)
@@ -21,6 +24,7 @@ async function getManagerNameRole() {
   return mgrNames
 }
 
+// function to get department name
 async function getDepartmentName() {
   const [dep] = await connection.query(`SELECT D.name From Department D `)
   const depNames = []
@@ -32,6 +36,7 @@ async function getDepartmentName() {
   return depNames
 }
 
+// function to get department ID
 async function getDepartmentId(deptname) {
   const [dep] = await connection.query(`SELECT id From Department Where ?`,
     { name: deptname }
@@ -39,6 +44,7 @@ async function getDepartmentId(deptname) {
   return dep[0].id
 }
 
+// function to get role name
 async function getRoleName() {
   const [role] = await connection.query(`SELECT R.title From Role R `)
   const roleNames = []
@@ -50,6 +56,7 @@ async function getRoleName() {
   return roleNames
 }
 
+// function to get roleID by using role name
 async function getRoleId(rolename) {
 
   const [role] = await connection.query(`SELECT id From Role Where ?`,
@@ -58,6 +65,7 @@ async function getRoleId(rolename) {
   return role[0].id
 }
 
+// function to get employees name
 async function getEmployeeName() {
   const [emp] = await connection.query(`SELECT E.id,concat(First_Name,' ',Last_Name) as EmployeeName
   FROM   Employee as E  `)
@@ -69,12 +77,13 @@ async function getEmployeeName() {
   return empNames
 }
 
+// function to get employee Id using employee name
 async function getEmpId(empname) {
 
   const empsplit = empname.split(" ");
   const firstName = empsplit[0];
   const lastName = empsplit[1];
-  //const deptName = mgrsplit[2]
+
   const [emp] = await connection.query(`SELECT id From Employee M Where ? AND ?`,
     [
       { first_name: firstName },
@@ -82,10 +91,11 @@ async function getEmpId(empname) {
     ]
 
   )
-  
+
   return emp[0].id
 }
 
+// function to get emmployee name and role
 async function getEmpNameRole() {
   const [emp] = await connection.query(`SELECT concat(E.First_Name,' ',E.Last_Name, ' ', R.Title) as Employee
     FROM   Employee E, Role R WHERE E.Role_ID = R.ID `)
@@ -107,5 +117,4 @@ module.exports = {
   getManagerNameRole: getManagerNameRole,
   getEmployeeName: getEmployeeName,
   getEmpNameRole: getEmpNameRole
-
 };
