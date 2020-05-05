@@ -3,6 +3,12 @@ const inquirer = require("inquirer");
 const mysql = require("mysql2/promise");
 const cTable = require("console.table");
 const companyData = require("./companyData.js")
+const Font = require('ascii-art-font');
+
+
+Font.create('Employee  Tracker', 'Doom', function(err,rendered){
+  console.log(rendered)
+});
 
 // main function for the application to connect the database and perform further async tasks.
 main()

@@ -15,7 +15,7 @@
 
   * ### **[Installation](#installation)**
   
-  * ### **[UserStory](#user Story)**
+  * ### **[UserStory](#userStory)**
   
   * ### **[License](#license)** 
 
@@ -57,13 +57,7 @@
 
   ### **
 
-  # Test
-
-  ### *Test run*
-
-  # Usercontribution
-
-  ### *Test*
+ 
 
   # Question
   ### If there is any question, please contact us in the follwing URL.

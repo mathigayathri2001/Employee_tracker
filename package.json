@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/mathigayathri2001/Employee_tracker#readme",
   "dependencies": {
+    "ascii-art-font": "^1.0.2",
     "console.table": "^0.10.0",
     "inquirer": "^7.1.0",
     "mysql2": "^2.1.0"
