@@ -54,8 +54,9 @@
   ### License link:"https://choosealicense.com/licenses/mit/"
   
   # Usage
+ ![Employee Tracker](Assets/Employee_tracker.gif)
 
-  ### **
+  
 
  
 
@@ -64,5 +65,5 @@
 
   https://github.com/mathigayathri2001
 
-  <img src= "https://avatars1.githubusercontent.com/u/60233461?v=4"/>
+  <img src= "https://avatars1.githubusercontent.com/u/60233461?v=4" alt = "profile picture" width = "200"/>
  
