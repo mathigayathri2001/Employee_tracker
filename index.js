@@ -1,9 +1,8 @@
 const inquirer = require("inquirer");
 const mysql = require("mysql2/promise");
-//const cTable = require("console.table");
+const cTable = require("console.table");
 const companyData = require("./companyData.js")
 
-//let connection
 main()
 async function main(){
     try{
@@ -42,8 +41,9 @@ const starterQuestion ={
     "Remove Department",
     "Remove Role",
     "Remove Employee",
-    "update Employee Manager",
     "update Employee Role",
+    "update Employee Manager",
+    "View the total utilized budget of a department",
     "Exit"
     ]
 
@@ -87,6 +87,9 @@ async function start() {
     case "update Employee Manager":
       await updateEmployeeManager();
       break;
+    case "View the total utilized budget of a department":
+        await viewDeptBudget();
+        break;
     case "Exit":
       break;
   }
@@ -113,7 +116,7 @@ async function viewDepartment(){
     await start()
 }
 async function viewRole(){
-    const [role]= await connection.query(`SELECT R.ID,R.TITLE,R.SALARY,D.Name
+    const [role]= await connection.query(`SELECT R.ID,R.TITLE,R.SALARY,D.Name as Department
     FROM ROle AS R
     left join department as D on R.department_id =D.id`)
     console.table(role);
@@ -124,7 +127,7 @@ async function viewEmployeesByMgr(){
     const answer = await inquirer.prompt({
         name: "manager",
         message: "Which manager's employees do you want to view?",
-        type: "list",
+        type: "rawlist",
         choices: names
       });
       const [Emp_By_Mgr]= await connection.query(`select E.Id,concat(E.first_Name,' ',E.Last_Name ) as EmployeeName,
@@ -198,7 +201,7 @@ async function addEmployee(){
   { 
     name: "role",
     message: "Enter employee role: ",
-    type: "list",
+    type: "rawlist",
     choices: names
   },
   { 
@@ -227,7 +230,7 @@ async function removeDepartment(){
   const answer = await inquirer.prompt({
     name: "department",
     message: "Which Department to remove: ",
-    type: "list",
+    type: "rawlist",
     choices: names
   });
 
@@ -241,7 +244,7 @@ async function removeRole(){
   const answer = await inquirer.prompt({
     name: "role",
     message: "Which Role to remove: ",
-    type: "list",
+    type: "rawlist",
     choices: names
   });
 
@@ -256,7 +259,7 @@ async function removeEmployee(){
   const answer = await inquirer.prompt({
     name: "employee",
     message: "Choose the Employee to remove: ",
-    type: "list",
+    type: "rawlist",
     choices: names
   });
   
@@ -282,14 +285,14 @@ async function updateEmployeeRole(){
     
       name: "employee",
       message: "Which employee do you want to update?",
-      type: "list",
+      type: "rawlist",
       choices: names,
     
   },
   {
     name: "roll",
     message: "Enter the roll Name:",
-    type: "list",
+    type: "rawlist",
     choices: rollName
   }
 
@@ -314,24 +317,51 @@ async function updateEmployeeManager(){
     
       name: "employee",
       message: "Which employee do you want to update?",
-      type: "list",
+      type: "rawlist",
       choices: names,
     
   },
   {
     name: "mgrname",
     message: "Enter the Manager Name:",
-    type: "list",
+    type: "rawlist",
     choices: managername
   }
 
 ]);
+console.log(answer.mgrname)
    const mgrID = await companyData. getEmpId(answer.mgrname);
    console.log(mgrID)
    const empID =  await companyData.getEmpId(answer.employee);
 console.log(empID)
   const [updEmp]= await connection.query(`UPDATE EMPLOYEE SET ? WHERE ?`,
-    [{manager_id:mgrID},
-   {id:empID}])
+    [
+      {
+        manager_id:mgrID
+      },
+      {
+        id:empID
+      }
+    
+    ])
   await start()
+}
+
+
+async function viewDeptBudget(){
+  const names = await companyData.getDepartmentName();
+   const answer = await inquirer.prompt({
+       name: "dept",
+       message: "Which department do you like to generate the budget?",
+       type: "rawlist",
+       choices: names
+     });
+     const deptID = await companyData.getDepartmentId(answer.dept)
+    const [budget]= await connection.query(`select sum(R.salary)
+    FROM Role R
+    left join department D on D.id =R.department_id
+    left join employee  E  on r.id=E.role_id
+    where D.id =?`, [deptID])
+     console.table(budget)
+     await start()    
 }

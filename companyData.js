@@ -1,3 +1,4 @@
+
 async function getManagerName() {
   const [mgr] = await connection.query(`SELECT concat(First_Name,' ',Last_Name) as Manager
   FROM   Employee WHERE  Manager_ID is null `)
@@ -68,25 +69,26 @@ async function getEmployeeName() {
   return empNames
 }
 
-async function getEmpId(mgrname) {
+async function getEmpId(empname) {
 
-  const mgrsplit = mgrname.split(" ");
-  const firstName = mgrsplit[0];
-  const lastName = mgrsplit[1];
-  const deptName = mgrsplit[2]
-  const [manager] = await connection.query(`SELECT id From Employee M Where ? AND ?`,
+  const empsplit = empname.split(" ");
+  const firstName = empsplit[0];
+  const lastName = empsplit[1];
+  //const deptName = mgrsplit[2]
+  const [emp] = await connection.query(`SELECT id From Employee M Where ? AND ?`,
     [
       { first_name: firstName },
       { last_name: lastName }
     ]
 
   )
-  return manager[0].id
+  
+  return emp[0].id
 }
 
 async function getEmpNameRole() {
   const [emp] = await connection.query(`SELECT concat(E.First_Name,' ',E.Last_Name, ' ', R.Title) as Employee
-    FROM   Employee E, Role R WHERE   E.Role_ID = R.ID `)
+    FROM   Employee E, Role R WHERE E.Role_ID = R.ID `)
   const empNames = []
   for (let empName of emp) {
     let name = `${empName.Employee}`;
