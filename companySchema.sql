@@ -1,14 +1,17 @@
+-- check the database company_db is alredy exist 
+-- if so, drop the databse otherwise create database and use it 
 DROP DATABASE IF EXISTS company_db;
 CREATE database company_db;
 USE company_db;
 
+-- create table department
  CREATE TABLE DEPARTMENT (
     ID INTEGER AUTO_INCREMENT NOT NULL,
     NAME VARCHAR(30) NOT NULL,
     PRIMARY KEY (ID)
 );
 
-
+-- create table role
 CREATE TABLE ROLE (
   ID INTEGER AUTO_INCREMENT NOT NULL,
   TITLE  VARCHAR(30) NOT NULL, 
@@ -18,7 +21,7 @@ CREATE TABLE ROLE (
   
 );
 
-
+-- create table employee
 CREATE TABLE EMPLOYEE (
   ID INTEGER AUTO_INCREMENT NOT NULL,
   FIRST_NAME VARCHAR(30) NOT NULL,
